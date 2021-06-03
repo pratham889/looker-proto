@@ -69,13 +69,23 @@ view: cc_anomaly {
     sql: ${TABLE}.TRANS_DT ;;
   }
 
-  measure: count {
+  measure: count_drill {
     type: count
     drill_fields: [id, dept_name, div_name]
   }
 
   measure: total_anomalies {
     sql: ${anomaly_label} ;;
+    type: sum
+  }
+
+  measure: merchandise_amt_sum {
+    sql: ${merchandise_amt} ;;
+    type: sum
+  }
+
+  measure: num_transactions {
+    sql: ${id} ;;
     type: sum
   }
 }
