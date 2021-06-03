@@ -74,18 +74,36 @@ view: cc_anomaly {
     drill_fields: [id, dept_name, div_name]
   }
 
-  measure: total_anomalies {
+  measure: anomalies_count {
     sql: ${anomaly_label} ;;
     type: sum
   }
 
-  measure: merchandise_amt_sum {
+  measure: transaction_sum {
     sql: ${merchandise_amt} ;;
     type: sum
+    value_format: "$0"
+
   }
 
-  measure: num_transactions {
+  measure: anomaly_sum {
+    type: sum
+    value_format: "$0"
+    sql:
+    (
+    SELECT ${TABLE}.merchandise_amt
+    FROM ${TABLE} AS o
+    WHERE ${TABLE}.anomaly_label = 0
+    ) ;;
+  }
+
+
+  measure: transactions_count {
     sql: ${id} ;;
     type: count_distinct
+  }
+  measure: anomaly_perc {
+    sql: ${anomalies_count}/${transactions_count}*100 ;;
+    type: number
   }
 }
