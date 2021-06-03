@@ -86,6 +86,6 @@ view: cc_anomaly {
 
   measure: num_transactions {
     sql: ${id} ;;
-    type: sum
+    type: count_distinct
   }
 }
