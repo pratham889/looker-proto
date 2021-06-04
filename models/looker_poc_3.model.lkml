@@ -10,4 +10,6 @@ datagroup: looker_poc_3_default_datagroup {
 
 persist_with: looker_poc_3_default_datagroup
 
-explore: cc_anomaly {}
+explore: cc_anomaly {
+  from: cc_anomaly
+  }

@@ -77,7 +77,7 @@ view: cc_anomaly {
     sql: ${TABLE}.TRANS_DT ;;
   }
 
-  measure: count_drill {
+  measure: count {
     type: count
     drill_fields: [id, dept_name, div_name]
   }
@@ -88,6 +88,28 @@ view: cc_anomaly {
   }
 
   measure: transaction_sum {
+    sql:${merchandise_amt};;
+    value_format: "$0"
+    type: sum
+  }
+
+  measure: total_anomalies_amt{
+    sql:${merchandise_amt};;
+    value_format: "$0"
+    type: sum
+    filters: [anomaly_label:"1"]
+  }
+
+  measure: total_non_anomalies_amt{
+    sql:${merchandise_amt};;
+    value_format: "$0"
+    type: sum
+    filters: [anomaly_label:"0"]
+  }
+
+
+
+  measure: merchandise_amt_sum {
     sql: ${merchandise_amt} ;;
     type: sum
     value_format: "$0"
@@ -112,4 +134,5 @@ view: cc_anomaly {
     type: number
     value_format: "0\%"
   }
+
 }
