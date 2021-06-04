@@ -78,4 +78,28 @@ view: cc_anomaly {
     sql: ${anomaly_label} ;;
     type: sum
   }
+
+  measure: total_trans_amt {
+    sql:${merchandise_amt};;
+    value_format: "$0"
+    type: sum
+  }
+
+  measure: total_anomalies_amt{
+    sql:${merchandise_amt};;
+    value_format: "$0"
+    type: sum
+    filters: [anomaly_label:"1"]
+  }
+
+  measure: total_non_anomalies_amt{
+    sql:${merchandise_amt};;
+    value_format: "$0"
+    type: sum
+    filters: [anomaly_label:"0"]
+  }
+
+
+
+
 }
