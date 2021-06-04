@@ -69,7 +69,7 @@ view: cc_anomaly {
     sql: ${TABLE}.TRANS_DT ;;
   }
 
-  measure: count_drill {
+  measure: count {
     type: count
     drill_fields: [id, dept_name, div_name]
   }
@@ -109,7 +109,7 @@ view: cc_anomaly {
     type: sum
   }
 
-  measure: num_transactions {
+  measure: transactions_count {
     sql: ${id} ;;
     type: sum
   }
