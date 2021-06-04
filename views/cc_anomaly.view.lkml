@@ -54,6 +54,14 @@ view: cc_anomaly {
     sql: ${TABLE}.MERCHANT ;;
   }
 
+  measure: severity {
+    type: string
+    sql: CASE WHEN ${anomaly_perc} < 10 THEN "Minor"
+         WHEN ${anomaly_perc} < 50 THEN "Major"
+         WHEN ${anomaly_perc} > 50 THEN "Critical"
+        ELSE "None" END ;;
+  }
+
   dimension_group: trans_dt {
     type: time
     timeframes: [
@@ -89,13 +97,10 @@ view: cc_anomaly {
   measure: anomaly_sum {
     type: sum
     value_format: "$0"
-    sql:
-    (
-    SELECT ${TABLE}.merchandise_amt
-    FROM ${TABLE} AS o
-    WHERE ${TABLE}.anomaly_label = 0
-    ) ;;
+    sql: CASE WHEN ${anomaly_label} = 1 THEN ${merchandise_amt} ELSE 0 END ;;
   }
+
+
 
 
   measure: transactions_count {
@@ -105,5 +110,6 @@ view: cc_anomaly {
   measure: anomaly_perc {
     sql: ${anomalies_count}/${transactions_count}*100 ;;
     type: number
+    value_format: "0\%"
   }
 }
